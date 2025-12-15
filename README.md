@@ -84,6 +84,8 @@ Or with more verbose logging:
 ```bash
 uv run celery -A celery_worker worker --loglevel=debug --pool=threads --concurrency=4
 ```
+uv run celery -A app.celery_app.celery_config worker -Q job_queue -l info --pool=threads --concurrency=10
+
 
 **Note:** Make sure Redis is running before starting Celery workers.
 

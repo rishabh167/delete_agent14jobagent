@@ -63,6 +63,22 @@ class User(Base):
     logger.info("User model configured successfully")
 
 
+
+
+# ---------------------------------------------------------
+# NOTIFICATION USERS
+# ---------------------------------------------------------
+
+class NotificationUser(Base):
+    __tablename__ = "notification_users"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False, index=True)
+    created_at = Column(DateTime, server_default=func.now(), nullable=False)
+    created_by = Column(Integer, nullable=False)
+
+    user = relationship("User", backref="notification_users")
+
 class UserJobsAssigned(Base):
     """Mapping users assigned to specific job openings"""
     __tablename__ = 'user_jobs_assigned'
@@ -264,7 +280,7 @@ class Company(Base):
     deleted_by_user = relationship("User", foreign_keys=[deleted_by])
     spocs = relationship("CompanySpoc", back_populates="company")
     
-    
+
     
 class TaskLogs(Base):
     __tablename__ = "task_logs"

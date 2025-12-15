@@ -632,6 +632,7 @@ def candidate_metrics(db: Session = Depends(get_db)):
         "grouped_by_user": grouped_by_user
     }
 
+from app.database_layer.db_model import NotificationUser
 
 @router.post("/send_cooling_period_reminders")
 def send_cooling_period_reminders(db: Session = Depends(get_db)):
@@ -711,6 +712,16 @@ def send_cooling_period_reminders(db: Session = Depends(get_db)):
                     recipient_name=user.username or "User",
                     candidates=candidates
                 )
+                if success:
+                    logger.info(f"Cooling period reminder email sent to {user.email}")
+                    notification = NotificationUser(
+                    user_id=user_id,
+                    created_by=user_id
+                )
+
+                db.add(notification)
+                db.commit()
+
                 
                 email_results.append({
                     "user_id": user_id,

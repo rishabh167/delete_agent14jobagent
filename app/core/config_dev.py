@@ -20,6 +20,7 @@ import os
 from pydantic_settings import BaseSettings
 from pydantic import Field
 from dotenv import load_dotenv
+from typing import Optional
 #from .logging import setup_logging
 import logging
 from urllib.parse import quote_plus
@@ -30,6 +31,14 @@ load_dotenv(override=True)
 # Setup application logging
 #setup_logging(override=True)
 logger = logging.getLogger("app_logger")
+
+ # Redis  ✅ FIXED
+    # -------------------------
+REDIS_HOST: str
+REDIS_PORT: int
+REDIS_DB: int = 0
+REDIS_PASSWORD: Optional[str] = None  # ✅ IMPORTANT
+
 
 class Settings(BaseSettings):
     """
