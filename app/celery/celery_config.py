@@ -29,6 +29,7 @@ celery_app = Celery(
         "app.celery.tasks.job_post_tasks",
         "app.celery.tasks.job_agent_tasks",
         "app.celery.tasks.cooling_period_tasks",
+        "app.celery.tasks.call_processing_tasks",
     ],
 )
 
@@ -58,12 +59,13 @@ celery_app.conf.update(
     # Celery Beat schedule for periodic tasks
     beat_schedule={
         "send-daily-cooling-period-reminders": {
-            "task": "send_daily_cooling_period_reminders","schedule": crontab( minute=1),
-            # "schedule": crontab(hour=, minute=0),  # Run daily at 9:00 AM UTC
+            "task": "send_daily_cooling_period_reminders",
+            "schedule": crontab(minute='*/1'),  # Run eve ry 1 minute
+            # "schedule": crontab(hour=9, minute=0),  # Run daily at 9:00 AM UTC
             "options": {"queue": "job_queue"},
         },
     },
 )
-
+ 
 logger.info("Celery app configured successfully with beat schedule")
 

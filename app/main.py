@@ -12,6 +12,7 @@ from app.api import (
     websocket_router,
     file_router,
     pdf_router,
+    call_router,
     jobs_report_router,
     recruiters_report_router,
     pipeline_report_router,
@@ -53,6 +54,7 @@ app.include_router(job_post_router)
 app.include_router(websocket_router)
 app.include_router(file_router)
 app.include_router(pdf_router)
+app.include_router(call_router)
 
 app.include_router(jobs_report_router)
 app.include_router(recruiters_report_router)
