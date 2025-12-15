@@ -58,8 +58,11 @@ celery_app.conf.update(
     # Celery Beat schedule for periodic tasks
     beat_schedule={
         "send-daily-cooling-period-reminders": {
-            "task": "send_daily_cooling_period_reminders","schedule": crontab( minute=1),
-            # "schedule": crontab(hour=, minute=0),  # Run daily at 9:00 AM UTC
+            # The daily reminders task is defined below. Change this schedule as needed.
+            # NOTE: Previously this was set to run every minute which caused frequent emails.
+            # Default: run once daily at 09:00 UTC. For development/testing set minute="*/1".
+            "task": "send_daily_cooling_period_reminders",
+            "schedule": 30.0,             
             "options": {"queue": "job_queue"},
         },
     },
